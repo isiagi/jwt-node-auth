@@ -39,36 +39,45 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSignedJwtToken = exports.authenticationMiddleware = void 0;
+exports.NodeAuth = void 0;
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-var getSignedJwtToken = function (payload, serect, expire) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        console.log("hello");
-        return [2, jsonwebtoken_1.default.sign(payload, serect, {
-                expiresIn: expire,
-            })];
-    });
-}); };
-exports.getSignedJwtToken = getSignedJwtToken;
-var authenticationMiddleware = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var authHeaders, token, decode;
-    return __generator(this, function (_a) {
-        authHeaders = req.headers.authorization;
-        token = "";
-        if (!authHeaders || !authHeaders.startsWith("Bearer ")) {
-            return [2, res.status(400).json({ message: "Invalid authorization" })];
-        }
-        token = authHeaders.split(" ")[1];
-        try {
-            decode = jsonwebtoken_1.default.verify(token, "secret");
-            req.user = { decode: decode };
-            next();
-        }
-        catch (error) {
-            res.status(400).json({ message: "Invalid authorization" });
-        }
-        return [2];
-    });
-}); };
-exports.authenticationMiddleware = authenticationMiddleware;
+var NodeAuth = (function () {
+    function NodeAuth(serect) {
+        this.jwtSecret = serect;
+        this.authenticationMiddleware = this.authenticationMiddleware.bind(this);
+    }
+    NodeAuth.prototype.authenticationMiddleware = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var authHeaders, token, decode;
+            return __generator(this, function (_a) {
+                authHeaders = req.headers.authorization;
+                token = "";
+                if (!authHeaders || !authHeaders.startsWith("Bearer ")) {
+                    return [2, res.status(400).json({ message: "Please provide auth headers" })];
+                }
+                token = authHeaders.split(" ")[1];
+                try {
+                    decode = jsonwebtoken_1.default.verify(token, this.jwtSecret);
+                    req.user = decode;
+                    next();
+                }
+                catch (error) {
+                    res.status(400).json({ message: error });
+                }
+                return [2];
+            });
+        });
+    };
+    NodeAuth.prototype.getSignedJwtToken = function (payload, expire) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2, jsonwebtoken_1.default.sign(payload, this.jwtSecret, {
+                        expiresIn: expire,
+                    })];
+            });
+        });
+    };
+    return NodeAuth;
+}());
+exports.NodeAuth = NodeAuth;
 //# sourceMappingURL=index.js.map
