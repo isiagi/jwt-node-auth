@@ -4,10 +4,12 @@ import { Request, Response, NextFunction } from "express";
 type CustomRequest = Request & { user: {} };
 
 export class NodeAuth {
-  jwtSecret: any;
+  jwtSecret: string;
+  jwtExpires: number;
 
-  constructor(serect: string) {
+  constructor(serect: string, expires: number) {
     this.jwtSecret = serect;
+    this.jwtExpires = expires;
     this.authenticationMiddleware = this.authenticationMiddleware.bind(this);
   }
 
@@ -32,16 +34,16 @@ export class NodeAuth {
       req.user = decode ;
 
       next();
-      
+
     } catch (error) {
       res.status(400).json({ message: error });
     }
   }
 
-  async getSignedJwtToken(payload: {}, expire: number) {
+  async getSignedJwtToken(payload: {}) {
  
     return JWT.sign(payload, this.jwtSecret, {
-      expiresIn: expire,
+      expiresIn: this.jwtExpires,
     });
   }
 }

@@ -42,8 +42,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NodeAuth = void 0;
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var NodeAuth = (function () {
-    function NodeAuth(serect) {
+    function NodeAuth(serect, expires) {
         this.jwtSecret = serect;
+        this.jwtExpires = expires;
         this.authenticationMiddleware = this.authenticationMiddleware.bind(this);
     }
     NodeAuth.prototype.authenticationMiddleware = function (req, res, next) {
@@ -68,11 +69,11 @@ var NodeAuth = (function () {
             });
         });
     };
-    NodeAuth.prototype.getSignedJwtToken = function (payload, expire) {
+    NodeAuth.prototype.getSignedJwtToken = function (payload) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2, jsonwebtoken_1.default.sign(payload, this.jwtSecret, {
-                        expiresIn: expire,
+                        expiresIn: this.jwtExpires,
                     })];
             });
         });
