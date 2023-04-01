@@ -12,8 +12,13 @@
     "url": "git+https://github.com/isiagi/jwt-node-auth.git"
   },
   "keywords": [
+    "authentication",
+    "authorization",
     "jwt-authentication",
-    "node-authentication"
+    "node-authentication",
+    "node-auth",
+    "jwt-node"
+
   ],
   "author": "Geofrey Isiagi",
   "license": "MIT",
