@@ -1,0 +1,39 @@
+{
+  "name": "jwt-node-auth",
+  "version": "1.0.0",
+  "description": "This is a NodeJS authentication package using JWT in the background. This package let you generate a JWT Token and Verify the token on a fly.",
+  "main": "./build/index",
+  "scripts": {
+    "build": "rimraf ./build && tsc",
+    "start": "npm run build && node build/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isiagi/jwt-node-auth.git"
+  },
+  "keywords": [
+    "authentication",
+    "authorization",
+    "jwt-authentication",
+    "node-authentication",
+    "node-auth",
+    "jwt-node"
+
+  ],
+  "author": "Geofrey Isiagi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/isiagi/jwt-node-auth/issues"
+  },
+  "homepage": "https://github.com/isiagi/jwt-node-auth#readme",
+  "dependencies": {
+    "@types/express": "^4.17.17",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.1",
+    "typescript": "^5.0.2"
+  }
+}
