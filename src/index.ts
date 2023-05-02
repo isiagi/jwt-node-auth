@@ -10,10 +10,10 @@ export class NodeAuth {
   constructor(serect: string, expires: number) {
     this.jwtSecret = serect;
     this.jwtExpires = expires;
-    this.authenticationMiddleware = this.authenticationMiddleware.bind(this);
+    this.requireAuth = this.requireAuth.bind(this);
   }
 
-  async authenticationMiddleware(
+  async requireAuth(
     req: CustomRequest,
     res: Response,
     next: NextFunction

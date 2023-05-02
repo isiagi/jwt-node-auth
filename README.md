@@ -25,7 +25,7 @@ const auth = new NodeAuth(process.env.jwt__secret);
  // Verify Token 
  To verify a JWT token, you can use the authenticationMiddleware middleware provided by the package. To use this middleware, first add the following line to your code:
 
- app.use(auth.authenticationMiddleware);
+ app.use(auth.requireAuth);
 
  This will automatically verify the JWT token in the Authorization header of incoming requests. If the token is valid, the middleware will set the req.user property to the decoded token payload.
 

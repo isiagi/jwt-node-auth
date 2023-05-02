@@ -45,9 +45,9 @@ var NodeAuth = (function () {
     function NodeAuth(serect, expires) {
         this.jwtSecret = serect;
         this.jwtExpires = expires;
-        this.authenticationMiddleware = this.authenticationMiddleware.bind(this);
+        this.requireAuth = this.requireAuth.bind(this);
     }
-    NodeAuth.prototype.authenticationMiddleware = function (req, res, next) {
+    NodeAuth.prototype.requireAuth = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var authHeaders, token, decode;
             return __generator(this, function (_a) {
