@@ -36,8 +36,10 @@ const auth = new NodeAuth(process.env.jwt__secret, process.env.jwt_expiry);
 
  //headers must have
 
-`Bearer ${token}`
-// "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjgzMDIxMjU4LCJleHAiOjE2ODMwMjE3NTh9.jDVTDEoZsEG2m70qrxKzRcv1qo8er02PzFv3V-05ou0"
+`Authorization: Bearer ${token}`
+
+Example
+// "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjgzMDIxMjU4LCJleHAiOjE2ODMwMjE3NTh9.jDVTDEoZsEG2m70qrxKzRcv1qo8er02PzFv3V-05ou0"
 
  If the token is valid, the middleware will set the req.user property to the decoded token payload.
 
