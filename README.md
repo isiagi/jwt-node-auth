@@ -20,7 +20,7 @@ const auth = new NodeAuth(process.env.jwt__secret, process.env.jwt_expiry);
  // Generate Token 
  To generate a JWT token, call the getSignedJwtToken method on the auth object:
 
- const token = auth.getSignedJwtToken({ userId: '12345' }); 
+ const token = await auth.getSignedJwtToken({ userId: '12345' }); 
  //userId is token payload to be signed with token in generation.It can be any key value pair's like auth.getSignedJwtToken({ user: '12345', role: Admin, ... }).
 
 
