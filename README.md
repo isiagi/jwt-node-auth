@@ -14,12 +14,12 @@ To use jwt-node-auth in your NodeJS application, you'll need to create a new ins
 
 ```js
 const { NodeAuth } = require("jwt-node-auth");
-const auth = new NodeAuth(process.env.jwt__secret);
+const auth = new NodeAuth(process.env.jwt__secret, process.env.jwt_expiry);
 
  // Generate Token 
  To generate a JWT token, call the getSignedJwtToken method on the auth object:
 
- const token = auth.getSignedJwtToken({ userId: '12345' }, process.env.jwt_expiry);
+ const token = auth.getSignedJwtToken({ userId: '12345' }); //userId is data to be signed with token in generation.It can be anything and more key value pairs can be added.
 
 
  // Verify Token 
