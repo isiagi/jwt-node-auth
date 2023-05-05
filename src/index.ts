@@ -49,23 +49,19 @@ export class NodeAuth {
     });
   }
 
-  async useCookieToken(res: Response, age: number = 5, stage: string = "dev") {
-    const token = this.getSignedJwtToken;
-
-    var date = new Date();
-    const cookieOptions: {
-      maxAge: number;
-      httpOnly: boolean;
-      secure?: boolean;
-    } = {
-      maxAge: date.setTime(date.getTime() + age * 60 * 1000), // defualt of 5 minutes
+  async useCookieToken(res: Response, payload: Record<string, any>, age: number = 5, stage: string = "dev") {
+    const token = this.getSignedJwtToken(payload);
+  
+    const cookieOptions = {
+      maxAge: age * 60 * 1000, // default of 5 minutes
       httpOnly: true,
+      secure: false
     };
-
+  
     if (stage === "production") cookieOptions.secure = true; // only for SSL in production
-
+  
     res.cookie("jwt", token, cookieOptions);
-
+  
     return res.status(200).json({ message: "success", token });
-  }
+  }  
 }
