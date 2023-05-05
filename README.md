@@ -17,37 +17,65 @@ const { NodeAuth } = require("jwt-node-auth");
 
 const auth = new NodeAuth(process.env.jwt__secret, process.env.jwt_expiry);
 
- // Generate Token 
+```
+
+ ### Generate Token 
  To generate a JWT token, call the getSignedJwtToken method on the auth object:
 
- const token = await auth.getSignedJwtToken({ userId: '12345' }); 
+ ### async way
+
+```
+async function getToken(){
+    const token = await auth.getSignedJwtToken({ userId: '12345' }); 
+
+    return token
+}
  //userId is token payload to be signed with token in generation.It can be any key value pair's like auth.getSignedJwtToken({ user: '12345', role: Admin, ... }).
 
+```
 
- // Verify Token 
+### then way
+```
+function getToken() {
+    auth.getSignedJwtToken({ userId: '12345' }).then((token) => {
+            console.log(token);
+            //return token
+        }).catch((error) => {
+            console.log(error);
+        });
+}
+
+ //userId is token payload to be signed with token in generation.It can be any key value pair's like auth.getSignedJwtToken({ user: '12345', role: Admin, ... }).
+```
+
+
+ ### Verify Token And Protect Routes 
  To verify a JWT token, you can use the requireAuth middleware provided by the package. 
  This middleware can be used in the following ways.
 
+ ```
  app.use(auth.requireAuth);
  // OR with Router
  router.get("/all", auth.requireAuth, testController.getAll);
+ ```
 
  This will automatically verify the JWT token in the Authorization header of incoming requests. 
 
  //headers must have
 
+```
 `Authorization: Bearer ${token}`
 
 Example
 // "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjgzMDIxMjU4LCJleHAiOjE2ODMwMjE3NTh9.jDVTDEoZsEG2m70qrxKzRcv1qo8er02PzFv3V-05ou0"
-
+```
  If the token is valid, the middleware will set the req.user property to the decoded token payload.
 
+```
  In protected a route
  
  console.log(req.user); //{ userId: '12345' }
- 
-``` 
+```
 
  ## Contributing 
 
